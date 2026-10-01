@@ -93,6 +93,8 @@ class MainWindow(MSFluentWindow):
         self.startup_task = task  # 保存启动时要执行的任务
         self.exit_on_complete = exit_on_complete  # 任务完成后是否退出
         self.start_minimized_to_tray = start_minimized_to_tray
+        self.desktopSessionManager = None
+        self.desktopSessionAgent = None
         self._defer_startup_checks = False  # 静默启动时推迟的启动检查（检查更新/公告）
         self.detected_update_version = None
         self.updateVersionBadge = None
@@ -213,7 +215,8 @@ class MainWindow(MSFluentWindow):
             self.setGeometry(target_geometry)
 
     def _baseTitleBarText(self):
-        return f"March7th Assistant {cfg.version}"
+        suffix = tr('（桌面分身）') if os.environ.get('MARCH7TH_DESKTOP_SESSION') == '1' else ''
+        return f"March7th Assistant {cfg.version}{suffix}"
 
     def _ensureUpdateVersionBadge(self):
         if self.updateVersionBadge is not None:
@@ -417,9 +420,11 @@ class MainWindow(MSFluentWindow):
                 self.showNormal()
                 self.activateWindow()
 
-    def handle_external_activate(self, task=None, exit_on_complete=False):
+    def handle_external_activate(self, task=None, exit_on_complete=False, desktop_pipe=None, desktop_host_pid=None):
         """响应来自其他实例的激活请求：置顶窗口并根据需要启动任务或设置退出行为"""
         from PySide6.QtCore import QTimer
+        if desktop_pipe and desktop_host_pid:
+            self.connectDesktopSessionAgent(desktop_pipe, desktop_host_pid)
         try:
             # 显示并置顶窗口
             self.showNormal()
@@ -436,6 +441,33 @@ class MainWindow(MSFluentWindow):
         # 设置任务完成后是否退出的标志
         if exit_on_complete:
             self.exit_on_complete = exit_on_complete
+
+    def openDesktopSession(self):
+        if self.desktopSessionManager is None:
+            from module.desktop_session.manager import DesktopSessionManager
+            self.desktopSessionManager = DesktopSessionManager(self)
+            self.desktopSessionManager.statusChanged.connect(log.info)
+            self.desktopSessionManager.errorOccurred.connect(self._desktopSessionError)
+            QApplication.instance().aboutToQuit.connect(self.desktopSessionManager.shutdown)
+        self.desktopSessionManager.open(f'{self._baseTitleBarText()}{tr("（桌面分身）")}')
+
+    def _desktopSessionError(self, message):
+        log.error(message)
+        InfoBar.error(title=tr('桌面分身'), content=message, duration=10000, parent=self)
+
+    def connectDesktopSessionAgent(self, pipe_name, host_pid):
+        if sys.platform != 'win32':
+            return
+        try:
+            from module.desktop_session.agent import DesktopSessionAgent
+            if self.desktopSessionAgent:
+                self.desktopSessionAgent.close()
+                self.desktopSessionAgent.deleteLater()
+            self.desktopSessionAgent = DesktopSessionAgent(pipe_name, int(host_pid),
+                lambda: cfg.game_process_name, log, self)
+            QApplication.instance().aboutToQuit.connect(self.desktopSessionAgent.close)
+        except Exception as error:
+            self._desktopSessionError(str(error))
 
     def _on_tray_menu_about_to_show(self):
         """托盘菜单即将显示时激活窗口，解决 Windows 上点击外部区域无法关闭菜单的问题"""
@@ -761,6 +793,10 @@ class MainWindow(MSFluentWindow):
         """执行退出前的清理并退出程序
         e: 可选的 QCloseEvent，用于调用 e.accept()
         """
+        if self.desktopSessionManager and not self.desktopSessionManager.shutdown():
+            if e is not None:
+                e.ignore()
+            return
         # 保存窗口尺寸和最大化状态
         self._saveWindowState()
 

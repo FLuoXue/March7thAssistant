@@ -66,8 +66,12 @@ def parse_args():
         action="store_true",
         help="启动后最小化到托盘"
     )
+    optional.add_argument('--desktop-session-pipe', help=argparse.SUPPRESS)
+    optional.add_argument('--desktop-session-host-pid', type=int, help=argparse.SUPPRESS)
 
     args = parser.parse_args()
+    if bool(args.desktop_session_pipe) != bool(args.desktop_session_host_pid):
+        parser.error('桌面分身参数必须成对传入')
 
     # 处理 --list 参数
     if args.list:
@@ -91,6 +95,10 @@ def parse_args():
 
 # 解析命令行参数（在请求管理员权限之前）
 args = parse_args()
+
+if args.desktop_session_pipe:
+    from module.desktop_session.bootstrap import prepare_child_environment
+    prepare_child_environment(os.getcwd())
 
 # 如果不需要命令行输出，隐藏控制台窗口
 if not args.no_silent:
@@ -141,7 +149,8 @@ def _get_server_key():
     """根据程序路径生成唯一的本地 socket 名称，保证“相同路径”视为同一应用实例。"""
     path = os.path.abspath(sys.executable) if getattr(sys, 'frozen', False) else os.path.abspath(__file__)
     h = hashlib.sha1(path.encode('utf-8')).hexdigest()
-    return f"March7thAssistant_{h}"
+    from utils.windows_session import instance_scope
+    return f"March7thAssistant_{h}{instance_scope()}"
 
 
 def notify_existing_instance(key, payload_bytes, timeout=500):
@@ -191,7 +200,8 @@ def start_local_server(key):
                     # 如果主窗口已就绪，直接调用处理方法，否则缓存起来等待主窗口创建
                     if _main_window is not None:
                         try:
-                            _main_window.handle_external_activate(task=msg.get('task'), exit_on_complete=msg.get('exit', False))
+                            _main_window.handle_external_activate(task=msg.get('task'), exit_on_complete=msg.get('exit', False),
+                                                                 desktop_pipe=msg.get('desktop_pipe'), desktop_host_pid=msg.get('desktop_host_pid'))
                         except Exception:
                             pass
                     else:
@@ -232,7 +242,8 @@ if __name__ == "__main__":
     # 单实例：尝试通知现有实例（若存在），若成功则退出；否则在本实例启动 server
     _key = _get_server_key()
     try:
-        payload = json.dumps({'action': 'activate', 'task': args.task, 'exit': args.exit}).encode('utf-8')
+        payload = json.dumps({'action': 'activate', 'task': args.task, 'exit': args.exit,
+                              'desktop_pipe': args.desktop_session_pipe, 'desktop_host_pid': args.desktop_session_host_pid}).encode('utf-8')
     except Exception:
         payload = b'ACTIVATE'
 
@@ -278,13 +289,16 @@ if __name__ == "__main__":
         exit_on_complete=args.exit,
         start_minimized_to_tray=args.start_minimized_to_tray,
     )
+    if args.desktop_session_pipe:
+        w.connectDesktopSessionAgent(args.desktop_session_pipe, args.desktop_session_host_pid)
 
     # 注册主窗口并处理启动期间收到的挂起消息
     _main_window = w
     if _pending_messages:
         for msg in _pending_messages:
             try:
-                w.handle_external_activate(task=msg.get('task'), exit_on_complete=msg.get('exit', False))
+                w.handle_external_activate(task=msg.get('task'), exit_on_complete=msg.get('exit', False),
+                                           desktop_pipe=msg.get('desktop_pipe'), desktop_host_pid=msg.get('desktop_host_pid'))
             except Exception:
                 pass
         _pending_messages.clear()

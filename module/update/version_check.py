@@ -43,13 +43,13 @@ class VersionCheckError(RuntimeError):
 # ── GitHub API 镜像列表 ──────────────────────────────────────────────
 
 _GITHUB_API_URLS = [
-    "https://api.github.com/repos/moesnow/March7thAssistant/releases/latest",
-    "https://github.kotori.top/https://api.github.com/repos/moesnow/March7thAssistant/releases/latest",
+    "https://api.github.com/repos/FLuoXue/March7thAssistant/releases/latest",
+    "https://github.kotori.top/https://api.github.com/repos/FLuoXue/March7thAssistant/releases/latest",
 ]
 
 _GITHUB_API_PRERELEASE_URLS = [
-    "https://api.github.com/repos/moesnow/March7thAssistant/releases",
-    "https://github.kotori.top/https://api.github.com/repos/moesnow/March7thAssistant/releases",
+    "https://api.github.com/repos/FLuoXue/March7thAssistant/releases",
+    "https://github.kotori.top/https://api.github.com/repos/FLuoXue/March7thAssistant/releases",
 ]
 
 

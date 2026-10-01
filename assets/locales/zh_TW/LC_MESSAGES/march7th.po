@@ -14,11 +14,11 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: tools.i18n\n"
 
-#: app/main_window.py:329
+#: app/main_window.py:332
 msgid "设置"
 msgstr "設定"
 
-#: app/main_window.py:290
+#: app/main_window.py:293
 msgid "主页"
 msgstr "首頁"
 
@@ -38,19 +38,19 @@ msgstr "常見問題"
 msgid "更新日志"
 msgstr "更新日誌"
 
-#: app/main_window.py:293
+#: app/main_window.py:296
 msgid "抽卡记录"
 msgstr "抽卡紀錄"
 
-#: app/main_window.py:294
+#: app/main_window.py:297
 msgid "工具箱"
 msgstr "工具箱"
 
-#: app/main_window.py:299
+#: app/main_window.py:302
 msgid "启动游戏"
 msgstr "啟動遊戲"
 
-#: app/main_window.py:303
+#: app/main_window.py:306
 msgid "日志"
 msgstr "日誌"
 
@@ -62,7 +62,7 @@ msgstr "任務日誌"
 msgid "等待任务..."
 msgstr "等待任務..."
 
-#: app/log_interface.py:1831
+#: app/log_interface.py:1834
 msgid "清空日志"
 msgstr "清空日誌"
 
@@ -74,15 +74,15 @@ msgstr "設定排程任務"
 msgid "尚未配置定时任务"
 msgstr "尚未設定排程任務"
 
-#: app/log_interface.py:2410
+#: app/log_interface.py:2413
 msgid "任务完成"
 msgstr "任務完成"
 
-#: app/log_interface.py:2413
+#: app/log_interface.py:2416
 msgid "任务已停止"
 msgstr "任務已停止"
 
-#: app/main_window.py:319
+#: app/main_window.py:322
 msgid "赞赏"
 msgstr "贊助"
 
@@ -784,27 +784,27 @@ msgstr "「退出」指退出遊戲，不再建議使用循環模式，請改用
 msgid "无"
 msgstr "無"
 
-#: app/log_interface.py:2336
+#: app/log_interface.py:2339
 msgid "关机"
 msgstr "關機"
 
-#: app/log_interface.py:2337
+#: app/log_interface.py:2340
 msgid "睡眠"
 msgstr "睡眠"
 
-#: app/log_interface.py:2338
+#: app/log_interface.py:2341
 msgid "休眠"
 msgstr "休眠"
 
-#: app/log_interface.py:2339
+#: app/log_interface.py:2342
 msgid "重启"
 msgstr "重新啟動"
 
-#: app/log_interface.py:2340
+#: app/log_interface.py:2343
 msgid "注销"
 msgstr "登出"
 
-#: app/log_interface.py:2341
+#: app/log_interface.py:2344
 msgid "关闭显示器"
 msgstr "關閉顯示器"
 
@@ -1058,11 +1058,11 @@ msgstr "更新將包含依賴組件，建議保持開啟。若關閉此選項，
 msgid "Mirror 酱 CDK"
 msgstr "Mirror 醬 CDK"
 
-#: app/main_window.py:321
+#: app/main_window.py:324
 msgid "支持作者🥰"
 msgstr "支持作者🥰"
 
-#: app/main_window.py:322
+#: app/main_window.py:325
 msgid ""
 "此程序为免费开源项目，如果你付了钱请立刻退款\n"
 "如果喜欢本项目，可以微信赞赏送作者一杯咖啡☕\n"
@@ -1072,11 +1072,11 @@ msgstr ""
 "如果喜歡本專案，可以贊助送作者一杯咖啡☕\n"
 "您的支持就是作者開發和維護專案的動力🚀"
 
-#: app/main_window.py:348
+#: app/main_window.py:351
 msgid "显示主界面"
 msgstr "顯示主介面"
 
-#: app/main_window.py:353
+#: app/main_window.py:356
 msgid "完整运行"
 msgstr "完整運行"
 
@@ -1088,63 +1088,63 @@ msgstr "退出"
 msgid "任务正在运行"
 msgstr "任務正在運行"
 
-#: app/main_window.py:450
+#: app/main_window.py:482
 msgid "请先停止当前任务后再启动新任务"
 msgstr "請先停止目前任務後再啟動新任務"
 
-#: app/main_window.py:721
+#: app/main_window.py:753
 msgid "配置已更新"
 msgstr "設定已更新"
 
-#: app/main_window.py:722
+#: app/main_window.py:754
 msgid "检测到配置文件变化，已自动重新加载"
 msgstr "偵測到設定檔變化，已自動重新載入"
 
-#: app/main_window.py:632
+#: app/main_window.py:664
 msgid "配置加载失败"
 msgstr "設定載入失敗"
 
-#: app/main_window.py:902
+#: app/main_window.py:938
 msgid "启动成功(＾∀＾●)"
 msgstr "啟動成功(＾∀＾●)"
 
-#: app/main_window.py:942
+#: app/main_window.py:978
 msgid "启动失败"
 msgstr "啟動失敗"
 
-#: app/main_window.py:932
+#: app/main_window.py:968
 msgid "游戏路径配置错误(╥╯﹏╰╥)"
 msgstr "遊戲路徑設定錯誤(╥╯﹏╰╥)"
 
-#: app/main_window.py:912
+#: app/main_window.py:948
 msgid "浏览器或驱动下载失败 (╥╯﹏╰╥)"
 msgstr "瀏覽器或驅動程式下載失敗 (╥╯﹏╰╥)"
 
-#: app/main_window.py:913
+#: app/main_window.py:949
 msgid "请检查网络连接是否正常"
 msgstr "請檢查網路連線是否正常"
 
-#: app/main_window.py:922
+#: app/main_window.py:958
 msgid "云游戏启动失败(╥╯﹏╰╥)"
 msgstr "雲端遊戲啟動失敗(╥╯﹏╰╥)"
 
-#: app/main_window.py:923
+#: app/main_window.py:959
 msgid "请检查所选浏览器是否存在，网络连接是否正常"
 msgstr "請檢查所選瀏覽器是否存在，網路連線是否正常"
 
-#: app/main_window.py:871
+#: app/main_window.py:907
 msgid "正在下载内置浏览器(ง •̀_•́)ง"
 msgstr "正在下載內建瀏覽器(ง •̀_•́)ง"
 
-#: app/main_window.py:872
+#: app/main_window.py:908
 msgid "下载成功后，将自动启动云·星穹铁道"
 msgstr "下載成功後，將自動啟動雲·星穹鐵道"
 
-#: app/main_window.py:881
+#: app/main_window.py:917
 msgid "正在启动游戏(❁´◡`❁)"
 msgstr "正在啟動遊戲(❁´◡`❁)"
 
-#: app/main_window.py:811
+#: app/main_window.py:847
 msgid "程序已最小化到托盘"
 msgstr "程式已縮小至系統匣"
 
@@ -1284,27 +1284,27 @@ msgstr "觸控模式"
 msgid "以云游戏移动端 UI 的方式启动游戏，可搭配 UU远程 平板触控模式，启动后会将命令复制到剪贴板内"
 msgstr "以雲端遊戲行動端 UI 的方式啟動遊戲，可搭配 UU 遠端平板觸控模式，啟動後會將指令複製到剪貼簿內"
 
-#: app/tools_interface.py:126
+#: app/tools_interface.py:131
 msgid "恢复60成功 (＾∀＾●)"
 msgstr "恢復 60 成功 (＾∀＾●)"
 
-#: app/tools_interface.py:137
+#: app/tools_interface.py:142
 msgid "解锁120成功 (＾∀＾●)"
 msgstr "解鎖 120 成功 (＾∀＾●)"
 
-#: app/tools_interface.py:147
+#: app/tools_interface.py:152
 msgid "解锁失败"
 msgstr "解鎖失敗"
 
-#: app/tools_interface.py:148
+#: app/tools_interface.py:153
 msgid "请将游戏图像质量修改为自定义后重试"
 msgstr "請將遊戲圖像品質修改為自訂後重試"
 
-#: app/tools_interface.py:165
+#: app/tools_interface.py:170
 msgid "此功能依赖第三方程序实现"
 msgstr "此功能依賴第三方程式實現"
 
-#: app/tools_interface.py:166
+#: app/tools_interface.py:171
 msgid ""
 "https://github.com/winTEuser/Genshin_StarRail_fps_unlocker\n"
 "使用本功能产生的所有问题与本项目与开发者团队无关，是否继续？"
@@ -1312,19 +1312,19 @@ msgstr ""
 "https://github.com/winTEuser/Genshin_StarRail_fps_unlocker\n"
 "使用本功能產生的所有問題與本專案及開發者團隊無關，是否繼續？"
 
-#: app/tools_interface.py:167
+#: app/tools_interface.py:172
 msgid "再次确认：可能存在风险"
 msgstr "再次確認：可能存在風險"
 
-#: app/tools_interface.py:168
+#: app/tools_interface.py:173
 msgid "工作原理是通过 WriteProcessMemory 把代码写进游戏，是否继续？"
 msgstr "工作原理是透過 WriteProcessMemory 把程式碼寫進遊戲，是否繼續？"
 
-#: app/tools_interface.py:169
+#: app/tools_interface.py:174
 msgid "最终确认：请谨慎操作"
 msgstr "最終確認：請謹慎操作"
 
-#: app/tools_interface.py:170
+#: app/tools_interface.py:175
 msgid "确认继续并允许启用触屏模式？"
 msgstr "確認繼續並允許啟用觸控模式？"
 
@@ -1336,15 +1336,15 @@ msgstr "確認"
 msgid "取消"
 msgstr "取消"
 
-#: app/tools_interface.py:226
+#: app/tools_interface.py:231
 msgid "已将命令复制到剪贴板"
 msgstr "已將指令複製到剪貼簿"
 
-#: app/tools_interface.py:299
+#: app/tools_interface.py:305
 msgid "自动对话已启动"
 msgstr "自動對話已啟動"
 
-#: app/tools_interface.py:311
+#: app/tools_interface.py:317
 msgid "自动对话已停止"
 msgstr "自動對話已停止"
 
@@ -3235,7 +3235,7 @@ msgstr "鳴潮 ok-ww"
 msgid "MFAAvalonia"
 msgstr "MFAAvalonia"
 
-#: app/main_window.py:620
+#: app/main_window.py:652
 msgid "更新成功"
 msgstr "更新成功"
 
@@ -3351,19 +3351,19 @@ msgstr "截圖失敗(╥╯﹏╰╥)"
 msgid "无法获取游戏窗口截图，请确认游戏窗口已打开"
 msgstr "無法獲取遊戲窗口截圖，請確認遊戲窗口已打開"
 
-#: app/tools_interface.py:246
+#: app/tools_interface.py:251
 msgid "截图来源"
 msgstr "截圖來源"
 
-#: app/tools_interface.py:246
+#: app/tools_interface.py:251
 msgid "请选择截图方式"
 msgstr "請選擇截圖方式"
 
-#: app/tools_interface.py:249
+#: app/tools_interface.py:254
 msgid "捕获游戏窗口"
 msgstr "捕獲遊戲窗口"
 
-#: app/tools_interface.py:252
+#: app/tools_interface.py:257
 msgid "手动选择图片"
 msgstr "手動選擇圖片"
 
@@ -5367,11 +5367,11 @@ msgstr "Fate[UBW]角色聯動躍遷"
 msgid "Fate[UBW]光锥联动跃迁"
 msgstr "Fate[UBW]光錐聯動躍遷"
 
-#: app/main_window.py:858
+#: app/main_window.py:894
 msgid "游戏已在运行"
 msgstr "遊戲已在運行"
 
-#: app/main_window.py:859
+#: app/main_window.py:895
 msgid "无需重复启动游戏"
 msgstr "無需重複啟動遊戲"
 
@@ -5613,7 +5613,7 @@ msgid "{count} 秒后自动退出"
 msgid_plural "{count} 秒后自动退出|plural"
 msgstr[0] "{count} 秒後自動退出"
 
-#: app/main_window.py:933
+#: app/main_window.py:969
 msgid "请在“设置”→“程序”中配置"
 msgstr "請在「設定」→「程式」中設定"
 
@@ -5621,7 +5621,7 @@ msgstr "請在「設定」→「程式」中設定"
 msgid "请在“设置 → 关于 → 更新源”中选择 Mirror酱 并填写有效 CDK"
 msgstr "請在「設置 → 關於 → 更新源」中選擇 Mirror醬 並填寫有效 CDK"
 
-#: app/tools_interface.py:186
+#: app/tools_interface.py:191
 msgid "请在“设置”→“程序”中配置正确的游戏路径"
 msgstr "請在「設定」→「程式」中設定正確的遊戲路徑"
 
@@ -5721,7 +5721,7 @@ msgstr ""
 msgid "执行出错"
 msgstr ""
 
-#: app/main_window.py:512
+#: app/main_window.py:544
 msgid "语言切换失败"
 msgstr ""
 
@@ -5882,7 +5882,7 @@ msgstr "暫停任務"
 msgid "仅内置任务支持暂停，暂停后脚本将停止一切操作"
 msgstr "僅內建任務支援暫停，暫停後腳本將停止一切操作"
 
-#: app/log_interface.py:1774
+#: app/log_interface.py:1777
 msgid "继续任务"
 msgstr "繼續任務"
 
@@ -5894,11 +5894,11 @@ msgstr "暫停/繼續任務（全域熱鍵，支援背景）"
 msgid "按下 {stop} 停止任务"
 msgstr "按下 {stop} 停止任務"
 
-#: app/log_interface.py:1826
+#: app/log_interface.py:1829
 msgid "复制"
 msgstr "複製"
 
-#: app/log_interface.py:1829
+#: app/log_interface.py:1832
 msgid "全选"
 msgstr "全選"
 
@@ -6014,3 +6014,19 @@ msgstr ""
 #: app/setting_interface.py:258
 msgid "按不匹配推荐角色和副属性 0 次筛选，分解已弃置及四星以下遗器"
 msgstr ""
+
+#: app/main_window.py:218
+msgid "（桌面分身）"
+msgstr "（桌面分身）"
+
+#: app/main_window.py:456
+msgid "桌面分身"
+msgstr "桌面分身"
+
+#: app/tools_interface.py:68
+msgid "打开"
+msgstr "開啟"
+
+#: app/tools_interface.py:69
+msgid "在独立桌面运行星铁和三月七助手，支持游戏鼠标、窗口隐藏和管理员启动"
+msgstr "在獨立桌面執行星鐵與三月七助手，支援遊戲滑鼠、隱藏視窗及系統管理員啟動"

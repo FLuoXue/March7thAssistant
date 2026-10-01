@@ -71,6 +71,10 @@ class LocalGameController(GameControllerBase):
             # 精准匹配进程名并属于当前用户
             if target_process_name.lower() in name.lower() and user == current_user:
                 try:
+                    if os.name == 'nt':
+                        from utils.windows_session import process_session_id
+                        if process_session_id(proc.info['pid']) != process_session_id():
+                            continue
                     p = psutil.Process(proc.info["pid"])
                     p.terminate()
                     try:
@@ -82,7 +86,7 @@ class LocalGameController(GameControllerBase):
 
                     success = True
 
-                except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.Error):
+                except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.Error, OSError):
                     continue
 
         return success
