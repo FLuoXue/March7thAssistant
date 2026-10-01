@@ -5,6 +5,7 @@ on:
 
 jobs:
   mirrorchyan:
+    if: github.repository == 'moesnow/March7thAssistant'
     runs-on: macos-latest
 
     steps:

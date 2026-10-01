@@ -6408,3 +6408,21 @@ msgstr "HoYoPlay"
 #: app/setting_interface.py:3349
 msgid "选择启动器路径"
 msgstr "Select Launcher Path"
+
+#: app/main_window.py:218
+msgid "（桌面分身）"
+msgstr " (Desktop Session)"
+
+#: app/main_window.py:456
+msgid "桌面分身"
+msgstr "Desktop Session"
+
+#: app/tools_interface.py:68
+msgid "打开"
+msgstr "Open"
+
+#: app/tools_interface.py:69
+msgid "在独立桌面运行星铁和三月七助手，支持游戏鼠标、窗口隐藏和管理员启动"
+msgstr ""
+"Run Star Rail and March7th Assistant in a separate desktop, with game mouse "
+"input, window hiding, and elevated launch"
