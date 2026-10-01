@@ -7,6 +7,10 @@ on:
     tags:
       - "v*.*.*"
 
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   build:
     name: Build
@@ -40,6 +44,11 @@ jobs:
           prune-cache: false
 
       # 安装依赖
+      - name: Set up .NET SDK for desktop session
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
       - name: Install dependencies
         run: |
           uv sync --group build
@@ -175,6 +184,7 @@ jobs:
 
       # 强制触发 MirrorChyan 上传
       - name: Trigger MirrorChyanUploading
+        if: github.repository == 'moesnow/March7thAssistant' && startsWith(github.ref, 'refs/tags/')
         shell: bash
         run: |
           gh workflow run --repo $GITHUB_REPOSITORY 'MirrorChyan Uploading'

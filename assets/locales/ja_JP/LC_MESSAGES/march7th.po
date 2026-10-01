@@ -6243,3 +6243,19 @@ msgstr "HoYoPlay"
 #: app/setting_interface.py:3349
 msgid "选择启动器路径"
 msgstr "ランチャーのパスを選択"
+
+#: app/main_window.py:218
+msgid "（桌面分身）"
+msgstr "（デスクトップ分身）"
+
+#: app/main_window.py:456
+msgid "桌面分身"
+msgstr "デスクトップ分身"
+
+#: app/tools_interface.py:68
+msgid "打开"
+msgstr "開く"
+
+#: app/tools_interface.py:69
+msgid "在独立桌面运行星铁和三月七助手，支持游戏鼠标、窗口隐藏和管理员启动"
+msgstr "独立したデスクトップでスターレイルと三月七アシスタントを実行。ゲーム用マウス操作、ウィンドウの非表示、管理者権限での起動に対応"

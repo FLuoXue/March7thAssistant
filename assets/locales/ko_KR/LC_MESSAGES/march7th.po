@@ -6264,3 +6264,19 @@ msgstr "HoYoPlay"
 #: app/setting_interface.py:3349
 msgid "选择启动器路径"
 msgstr "런처 경로 선택"
+
+#: app/main_window.py:218
+msgid "（桌面分身）"
+msgstr " (독립 데스크톱)"
+
+#: app/main_window.py:456
+msgid "桌面分身"
+msgstr "독립 데스크톱"
+
+#: app/tools_interface.py:68
+msgid "打开"
+msgstr "열기"
+
+#: app/tools_interface.py:69
+msgid "在独立桌面运行星铁和三月七助手，支持游戏鼠标、窗口隐藏和管理员启动"
+msgstr "독립 데스크톱에서 스타레일과 삼월칠 어시스턴트를 실행합니다. 게임 마우스, 창 숨기기 및 관리자 실행을 지원합니다."
