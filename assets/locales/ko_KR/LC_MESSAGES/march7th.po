@@ -14,11 +14,11 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: tools.i18n\n"
 
-#: app/main_window.py:329
+#: app/main_window.py:332
 msgid "设置"
 msgstr "설정"
 
-#: app/main_window.py:290
+#: app/main_window.py:293
 msgid "主页"
 msgstr "홈"
 
@@ -38,19 +38,19 @@ msgstr "자주 묻는 질문"
 msgid "更新日志"
 msgstr "업데이트 로그"
 
-#: app/main_window.py:293
+#: app/main_window.py:296
 msgid "抽卡记录"
 msgstr "가챠 기록"
 
-#: app/main_window.py:294
+#: app/main_window.py:297
 msgid "工具箱"
 msgstr "도구 상자"
 
-#: app/main_window.py:299
+#: app/main_window.py:302
 msgid "启动游戏"
 msgstr "게임 실행"
 
-#: app/main_window.py:303
+#: app/main_window.py:306
 msgid "日志"
 msgstr "로그"
 
@@ -62,7 +62,7 @@ msgstr "임무 로그"
 msgid "等待任务..."
 msgstr "작업 대기 중..."
 
-#: app/log_interface.py:1831
+#: app/log_interface.py:1834
 msgid "清空日志"
 msgstr "로그 지우기"
 
@@ -74,15 +74,15 @@ msgstr "예약 실행 설정"
 msgid "尚未配置定时任务"
 msgstr "예약된 임무 없음"
 
-#: app/log_interface.py:2410
+#: app/log_interface.py:2413
 msgid "任务完成"
 msgstr "임무 완료"
 
-#: app/log_interface.py:2413
+#: app/log_interface.py:2416
 msgid "任务已停止"
 msgstr "임무 중지됨"
 
-#: app/main_window.py:319
+#: app/main_window.py:322
 msgid "赞赏"
 msgstr "후원"
 
@@ -787,27 +787,27 @@ msgstr "'종료'는 게임 종료를 의미합니다. 순환 모드 대신 로�
 msgid "无"
 msgstr "없음"
 
-#: app/log_interface.py:2336
+#: app/log_interface.py:2339
 msgid "关机"
 msgstr "시스템 종료"
 
-#: app/log_interface.py:2337
+#: app/log_interface.py:2340
 msgid "睡眠"
 msgstr "절전"
 
-#: app/log_interface.py:2338
+#: app/log_interface.py:2341
 msgid "休眠"
 msgstr "최대 절전"
 
-#: app/log_interface.py:2339
+#: app/log_interface.py:2342
 msgid "重启"
 msgstr "재부팅"
 
-#: app/log_interface.py:2340
+#: app/log_interface.py:2343
 msgid "注销"
 msgstr "로그오프"
 
-#: app/log_interface.py:2341
+#: app/log_interface.py:2344
 msgid "关闭显示器"
 msgstr "모니터 끄기"
 
@@ -1061,11 +1061,11 @@ msgstr "업데이트에 종속 구성 요소 포함. 켜둠 권장. 끄면 종�
 msgid "Mirror 酱 CDK"
 msgstr "Mirror 짱 CDK"
 
-#: app/main_window.py:321
+#: app/main_window.py:324
 msgid "支持作者🥰"
 msgstr "개발자 후원하기 🥰"
 
-#: app/main_window.py:322
+#: app/main_window.py:325
 msgid ""
 "此程序为免费开源项目，如果你付了钱请立刻退款\n"
 "如果喜欢本项目，可以微信赞赏送作者一杯咖啡☕\n"
@@ -1075,11 +1075,11 @@ msgstr ""
 "이 프로젝트가 마음에 든다면 WeChat으로 커피 한 잔을 후원해주세요☕\n"
 "당신의 후원은 개발 및 유지보수의 원동력이 됩니다🚀"
 
-#: app/main_window.py:348
+#: app/main_window.py:351
 msgid "显示主界面"
 msgstr "메인 화면 표시"
 
-#: app/main_window.py:353
+#: app/main_window.py:356
 msgid "完整运行"
 msgstr "전체 실행"
 
@@ -1091,63 +1091,63 @@ msgstr "종료"
 msgid "任务正在运行"
 msgstr "임무 실행 중"
 
-#: app/main_window.py:450
+#: app/main_window.py:482
 msgid "请先停止当前任务后再启动新任务"
 msgstr "새 임무를 시작하려면 먼저 현재 임무를 중지하세요"
 
-#: app/main_window.py:721
+#: app/main_window.py:753
 msgid "配置已更新"
 msgstr "설정 업데이트됨"
 
-#: app/main_window.py:722
+#: app/main_window.py:754
 msgid "检测到配置文件变化，已自动重新加载"
 msgstr "설정 파일 변경 감지, 자동 재로드됨"
 
-#: app/main_window.py:632
+#: app/main_window.py:664
 msgid "配置加载失败"
 msgstr "설정 로드 실패"
 
-#: app/main_window.py:902
+#: app/main_window.py:938
 msgid "启动成功(＾∀＾●)"
 msgstr "시작 성공 (＾∀＾●)"
 
-#: app/main_window.py:942
+#: app/main_window.py:978
 msgid "启动失败"
 msgstr "시작 실패"
 
-#: app/main_window.py:932
+#: app/main_window.py:968
 msgid "游戏路径配置错误(╥╯﹏╰╥)"
 msgstr "게임 경로 설정 오류 (╥╯﹏╰╥)"
 
-#: app/main_window.py:912
+#: app/main_window.py:948
 msgid "浏览器或驱动下载失败 (╥╯﹏╰╥)"
 msgstr "브라우저/드라이버 다운로드 실패 (╥╯﹏╰╥)"
 
-#: app/main_window.py:913
+#: app/main_window.py:949
 msgid "请检查网络连接是否正常"
 msgstr "네트워크 연결을 확인하세요"
 
-#: app/main_window.py:922
+#: app/main_window.py:958
 msgid "云游戏启动失败(╥╯﹏╰╥)"
 msgstr "클라우드 게임 시작 실패 (╥╯﹏╰╥)"
 
-#: app/main_window.py:923
+#: app/main_window.py:959
 msgid "请检查所选浏览器是否存在，网络连接是否正常"
 msgstr "선택한 브라우저가 있는지, 네트워크가 정상인지 확인하세요"
 
-#: app/main_window.py:871
+#: app/main_window.py:907
 msgid "正在下载内置浏览器(ง •̀_•́)ง"
 msgstr "내장 브라우저 다운로드 중 (ง ·̀_·́)ง"
 
-#: app/main_window.py:872
+#: app/main_window.py:908
 msgid "下载成功后，将自动启动云·星穹铁道"
 msgstr "다운로드 완료 후 클라우드·붕괴: 스타레일을 자동 시작합니다"
 
-#: app/main_window.py:881
+#: app/main_window.py:917
 msgid "正在启动游戏(❁´◡`❁)"
 msgstr "게임 시작 중 (❁´◡`❁)"
 
-#: app/main_window.py:811
+#: app/main_window.py:847
 msgid "程序已最小化到托盘"
 msgstr "프로그램이 트레이로 최소화되었습니다"
 
@@ -1289,27 +1289,27 @@ msgid "以云游戏移动端 UI 的方式启动游戏，可搭配 UU远程 平�
 msgstr ""
 "클라우드 게임 모바일 UI 방식으로 게임 시작, UU 원격 태블릿 터치 모드와 호환 가능, 시작 후 명령어가 클립보드에 복사됨"
 
-#: app/tools_interface.py:126
+#: app/tools_interface.py:131
 msgid "恢复60成功 (＾∀＾●)"
 msgstr "60 프레임 복구 성공 (＾∀＾●)"
 
-#: app/tools_interface.py:137
+#: app/tools_interface.py:142
 msgid "解锁120成功 (＾∀＾●)"
 msgstr "120 프레임 해제 성공 (＾∀＾●)"
 
-#: app/tools_interface.py:147
+#: app/tools_interface.py:152
 msgid "解锁失败"
 msgstr "잠금 해제 실패"
 
-#: app/tools_interface.py:148
+#: app/tools_interface.py:153
 msgid "请将游戏图像质量修改为自定义后重试"
 msgstr "게임 화질 설정을 사용자 정의로 변경 후 다시 시도해 주세요"
 
-#: app/tools_interface.py:165
+#: app/tools_interface.py:170
 msgid "此功能依赖第三方程序实现"
 msgstr "이 기능은 타사 프로그램에 의존합니다"
 
-#: app/tools_interface.py:166
+#: app/tools_interface.py:171
 msgid ""
 "https://github.com/winTEuser/Genshin_StarRail_fps_unlocker\n"
 "使用本功能产生的所有问题与本项目与开发者团队无关，是否继续？"
@@ -1317,19 +1317,19 @@ msgstr ""
 "https://github.com/winTEuser/Genshin_StarRail_fps_unlocker\n"
 "이 기능 사용으로 발생하는 모든 문제는 본 프로젝트 및 개발팀과 무관합니다. 계속하시겠습니까?"
 
-#: app/tools_interface.py:167
+#: app/tools_interface.py:172
 msgid "再次确认：可能存在风险"
 msgstr "재확인: 위험이 존재할 수 있음"
 
-#: app/tools_interface.py:168
+#: app/tools_interface.py:173
 msgid "工作原理是通过 WriteProcessMemory 把代码写进游戏，是否继续？"
 msgstr "작동 원리는 WriteProcessMemory를 통해 코드를 게임에 삽입하는 방식입니다. 계속하시겠습니까?"
 
-#: app/tools_interface.py:169
+#: app/tools_interface.py:174
 msgid "最终确认：请谨慎操作"
 msgstr "최종 확인: 신중하게 조작하세요"
 
-#: app/tools_interface.py:170
+#: app/tools_interface.py:175
 msgid "确认继续并允许启用触屏模式？"
 msgstr "계속 진행하고 터치스크린 모드를 활성화하시겠습니까?"
 
@@ -1341,15 +1341,15 @@ msgstr "확인"
 msgid "取消"
 msgstr "취소"
 
-#: app/tools_interface.py:226
+#: app/tools_interface.py:231
 msgid "已将命令复制到剪贴板"
 msgstr "명령어가 클립보드에 복사되었습니다"
 
-#: app/tools_interface.py:299
+#: app/tools_interface.py:305
 msgid "自动对话已启动"
 msgstr "자동 대화가 시작되었습니다"
 
-#: app/tools_interface.py:311
+#: app/tools_interface.py:317
 msgid "自动对话已停止"
 msgstr "자동 대화가 중지되었습니다"
 
@@ -3243,7 +3243,7 @@ msgstr "명조 ok-ww"
 msgid "MFAAvalonia"
 msgstr "MFAAvalonia"
 
-#: app/main_window.py:620
+#: app/main_window.py:652
 msgid "更新成功"
 msgstr "업데이트 성공"
 
@@ -3359,19 +3359,19 @@ msgstr "스크린샷 실패(╥╯﹏╰╥)"
 msgid "无法获取游戏窗口截图，请确认游戏窗口已打开"
 msgstr "게임 창 스크린샷을 가져올 수 없습니다. 게임 창이 열려 있는지 확인해 주세요."
 
-#: app/tools_interface.py:246
+#: app/tools_interface.py:251
 msgid "截图来源"
 msgstr "스크린샷 출처"
 
-#: app/tools_interface.py:246
+#: app/tools_interface.py:251
 msgid "请选择截图方式"
 msgstr "스크린샷 방식을 선택하세요"
 
-#: app/tools_interface.py:249
+#: app/tools_interface.py:254
 msgid "捕获游戏窗口"
 msgstr "게임 창 캡처"
 
-#: app/tools_interface.py:252
+#: app/tools_interface.py:257
 msgid "手动选择图片"
 msgstr "이미지 수동 선택"
 
@@ -5387,11 +5387,11 @@ msgstr "Fate[UBW] 캐릭터 컬래버 워프"
 msgid "Fate[UBW]光锥联动跃迁"
 msgstr "Fate[UBW] 광추 컬래버레이션 워프"
 
-#: app/main_window.py:858
+#: app/main_window.py:894
 msgid "游戏已在运行"
 msgstr "게임이 이미 실행 중입니다"
 
-#: app/main_window.py:859
+#: app/main_window.py:895
 msgid "无需重复启动游戏"
 msgstr "게임을 다시 실행할 필요가 없습니다"
 
@@ -5633,7 +5633,7 @@ msgid "{count} 秒后自动退出"
 msgid_plural "{count} 秒后自动退出|plural"
 msgstr[0] "{count} 초 후 자동 종료"
 
-#: app/main_window.py:933
+#: app/main_window.py:969
 msgid "请在“设置”→“程序”中配置"
 msgstr "'설정' → '프로그램'에서 설정하세요"
 
@@ -5641,7 +5641,7 @@ msgstr "'설정' → '프로그램'에서 설정하세요"
 msgid "请在“设置 → 关于 → 更新源”中选择 Mirror酱 并填写有效 CDK"
 msgstr "\"설정 → 정보 → 업데이트 소스\"에서 Mirror를 선택하고 유효한 CDK를 입력하세요"
 
-#: app/tools_interface.py:186
+#: app/tools_interface.py:191
 msgid "请在“设置”→“程序”中配置正确的游戏路径"
 msgstr "'설정' → '프로그램'에서 올바른 게임 경로를 설정해 주세요"
 
@@ -5741,7 +5741,7 @@ msgstr "실행 완료(＾∀＾●)"
 msgid "执行出错"
 msgstr "실행 오류"
 
-#: app/main_window.py:512
+#: app/main_window.py:544
 msgid "语言切换失败"
 msgstr "언어 전환 실패"
 
@@ -5903,7 +5903,7 @@ msgstr "임무 일시 중지"
 msgid "仅内置任务支持暂停，暂停后脚本将停止一切操作"
 msgstr "내장 임무만 일시 중지를 지원하며, 일시 중지 시 스크립트가 모든 동작을 중지합니다"
 
-#: app/log_interface.py:1774
+#: app/log_interface.py:1777
 msgid "继续任务"
 msgstr "임무 재개"
 
@@ -5915,11 +5915,11 @@ msgstr "임무 일시 중지/재개 (전역 단축키, 백그라운드 지원)"
 msgid "按下 {stop} 停止任务"
 msgstr "{stop} 중지"
 
-#: app/log_interface.py:1826
+#: app/log_interface.py:1829
 msgid "复制"
 msgstr "복사"
 
-#: app/log_interface.py:1829
+#: app/log_interface.py:1832
 msgid "全选"
 msgstr "모두 선택"
 
@@ -6133,3 +6133,18 @@ msgstr "수신 대기 중… {seconds}초 안에 QQ에서 봇에게 1:1 메시�
 #: app/setting_interface.py:3191
 msgid "监听中，请在群聊中 @ 机器人发送验证码 {code}（{seconds} 秒内）"
 msgstr "수신 대기 중… {seconds}초 안에 그룹 채팅에서 봇을 @하여 인증 코드 {code}를 보내세요"
+#: app/main_window.py:218
+msgid "（桌面分身）"
+msgstr " (독립 데스크톱)"
+
+#: app/main_window.py:456
+msgid "桌面分身"
+msgstr "독립 데스크톱"
+
+#: app/tools_interface.py:68
+msgid "打开"
+msgstr "열기"
+
+#: app/tools_interface.py:69
+msgid "在独立桌面运行星铁和三月七助手，支持游戏鼠标、窗口隐藏和管理员启动"
+msgstr "독립 데스크톱에서 스타레일과 삼월칠 어시스턴트를 실행합니다. 게임 마우스, 창 숨기기 및 관리자 실행을 지원합니다."

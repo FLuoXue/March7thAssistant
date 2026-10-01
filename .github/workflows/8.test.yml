@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - "**/*.py"
+      - "native/**"
       - "assets/locales/**"
       - "assets/docs/**"
       - "requirements.txt"
@@ -18,6 +19,7 @@ on:
       - main
     paths:
       - "**/*.py"
+      - "native/**"
       - "assets/locales/**"
       - "assets/docs/**"
       - "requirements.txt"
@@ -70,6 +72,20 @@ jobs:
 
       - name: Install dependencies
         run: uv sync --group dev
+
+      - name: Set up .NET SDK for desktop session
+        if: matrix.os == 'windows'
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build and check desktop session host
+        if: matrix.os == 'windows'
+        run: |
+          uv run python tools/build_desktop_session.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $hostTest = Start-Process -FilePath '.\build\desktop-session\March7th.Desktop.exe' -ArgumentList '--self-test' -WindowStyle Hidden -Wait -PassThru
+          if ($hostTest.ExitCode -ne 0) { exit $hostTest.ExitCode }
 
       - name: Check translation catalogs
         run: uv run python -m tools.i18n check

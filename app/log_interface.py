@@ -1707,6 +1707,9 @@ class LogInterface(ScrollArea):
 
     def _pauseControlPath(self):
         """暂停指令文件路径（CLI 通过环境变量 MARCH7TH_CONTROL_FILE 读取同一路径）。"""
+        if os.environ.get('MARCH7TH_DESKTOP_SESSION') == '1':
+            from utils.windows_session import process_session_id
+            return os.path.abspath(os.path.join('temp', f'pause-desktop-{process_session_id()}.json'))
         return os.path.abspath(os.path.join('temp', 'pause.json'))
 
     def _injectPauseControlEnv(self, env):

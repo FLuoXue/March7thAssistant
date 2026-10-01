@@ -474,7 +474,7 @@
 - 支持 “触屏模式（云游戏移动端 UI）” 启动游戏（工具箱）
 - “领取沉浸奖励” 选项更改为 “领取沉浸奖励/执行饰品提取”（领取积分奖励后将自动执行饰品提取）
 - 修复更换新壁纸 “愿今夜无梦” 后无法进入邮箱
-- 修复无法识别并跳过末日幻影快速挑战提示框 [#406](https://github.com/moesnow/March7thAssistant/issues/406) 
+- 修复无法识别并跳过末日幻影快速挑战提示框 [#406](https://github.com/moesnow/March7thAssistant/issues/406)
 
 ## v2.7.0
 
@@ -1152,3 +1152,13 @@
 ### Features
 - feat: graphical user interface
 增加图形用户界面
+
+## v2026.10.1
+- FLuoXue fork 桌面分身版，基于上游 v2026.9.30
+- 新增“工具箱 → 桌面分身”，支持独立 Windows 会话、管理员启动、隐藏、重连和注销
+- 新增星铁游戏相对鼠标转发，支持 Alt 释放、失焦释放、断线恢复与过期输入丢弃
+- 分身使用独立配置和暂停控制文件，关闭游戏时限定当前会话
+- 修正窗口画面比例：按实际画面区域保持 16:9，适配 DPI、小窗和拖动缩放
+- 分身窗口标题沿用主窗口标题及版本号，并追加“（桌面分身）”
+- 发行包内置自包含分身宿主，无需额外安装 .NET；GitHub 更新源指向本 fork
+- 使用说明：[桌面分身](https://github.com/FLuoXue/March7thAssistant/blob/main/assets/docs/DesktopSession.md)
