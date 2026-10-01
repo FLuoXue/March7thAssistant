@@ -9,7 +9,9 @@ binaries += collect_dynamic_libs('openvino', search_patterns=['openvino_intel_cp
 datas += collect_data_files('rapidocr')
 
 # Self-contained RDP host, built here so every release pipeline includes it.
-from tools.build_desktop_session import ensure_helper
+from pathlib import Path
+import runpy
+ensure_helper = runpy.run_path(str(Path(SPECPATH) / 'tools' / 'build_desktop_session.py'))['ensure_helper']
 desktop_helper = ensure_helper()
 binaries.append((str(desktop_helper), 'desktop_session'))
 datas += [(str(desktop_helper.parent / name), 'desktop_session')
