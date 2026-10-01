@@ -6161,3 +6161,31 @@ msgstr ""
 #: assets/config/character_names.json
 msgid "黑天鹅"
 msgstr ""
+
+#: app/main_window.py:218
+msgid "（桌面分身）"
+msgstr ""
+
+#: app/main_window.py:456
+msgid "桌面分身"
+msgstr ""
+
+#: app/setting_interface.py:1061
+msgid "米哈游启动器路径"
+msgstr ""
+
+#: app/setting_interface.py:2517
+msgid "通过任务计划程序在开机后自动执行完整运行模式（可能还需要自行配置电脑无需输入密码自动登录）"
+msgstr ""
+
+#: app/setting_interface.py:3332
+msgid "选择米哈游启动器路径"
+msgstr ""
+
+#: app/tools_interface.py:68
+msgid "打开"
+msgstr ""
+
+#: app/tools_interface.py:69
+msgid "在独立桌面运行星铁和三月七助手，支持游戏鼠标、窗口隐藏和管理员启动"
+msgstr ""
