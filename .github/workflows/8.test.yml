@@ -1,6 +1,11 @@
 name: Tests
 
 on:
+  workflow_call:
+    inputs:
+      source_sha:
+        required: true
+        type: string
   workflow_dispatch:
   push:
     branches:
@@ -25,6 +30,9 @@ on:
       - "requirements.txt"
       - "pyproject.toml"
       - "uv.lock"
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -54,6 +62,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.source_sha || github.sha }}
+          persist-credentials: false
 
       - name: Install Qt dependencies (Linux)
         if: matrix.os == 'linux'
@@ -66,8 +77,8 @@ jobs:
         with:
           version: "0.11.15"
           python-version: ${{ matrix.python-version }}
-          enable-cache: true
-          cache-python: true
+          enable-cache: ${{ github.event_name != 'workflow_call' && inputs.source_sha == '' }}
+          cache-python: ${{ github.event_name != 'workflow_call' && inputs.source_sha == '' }}
           prune-cache: false
 
       - name: Install dependencies
