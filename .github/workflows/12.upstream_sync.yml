@@ -1,0 +1,275 @@
+name: Sync upstream release
+run-name: Upstream sync (${{ inputs.mode || 'sync' }})
+
+on:
+  schedule:
+    - cron: '0 16 * * *' # 北京时间每天 00:00（UTC+8）
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'check: detect; rehearse / rehearse-ai: synthetic update, never publish; sync: real update'
+        type: choice
+        options: [check, rehearse, rehearse-ai, sync]
+        default: check
+      publish:
+        description: 'Allow main promotion and release after validation (sync mode only)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+  deployments: read
+
+# Includes time waiting for human review. Never cancel a push or publish in progress.
+concurrency:
+  group: m7a-upstream-release
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: >-
+      github.repository == 'FLuoXue/March7thAssistant' &&
+      (github.event_name == 'workflow_dispatch' || vars.UPSTREAM_SYNC_ENABLED == 'true')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      candidate: ${{ steps.finish.outputs.candidate }}
+      old: ${{ steps.finish.outputs.old }}
+      tag: ${{ steps.finish.outputs.tag }}
+      ai: ${{ steps.finish.outputs.ai }}
+      publish: ${{ steps.finish.outputs.publish }}
+    env:
+      SYNC_SOURCE: ${{ github.workspace }}/source
+      SYNC_STATE: ${{ github.workspace }}/sync-state
+      SYNC_MODE: ${{ inputs.mode || 'sync' }}
+      SYNC_PUBLISH: ${{ github.event_name == 'schedule' || inputs.publish }}
+    steps:
+      - name: Checkout trusted controller
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+
+      - name: Test synchronization controller
+        run: node --test control/.github/scripts/upstream-sync.test.cjs
+
+      - name: Checkout fork for rebase
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          path: source
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set commit identity
+        working-directory: source
+        run: |
+          git config user.name 'fluoxue-m7a-bot[bot]'
+          git config user.email 'fluoxue-m7a-bot[bot]@users.noreply.github.com'
+
+      - name: Detect the latest official stable release
+        id: detect
+        uses: actions/github-script@v8
+        with:
+          script: await require('./control/.github/scripts/upstream-sync.cjs').detect({github, context, core});
+
+      - name: Inspect configured and installed App permissions
+        uses: actions/github-script@v8
+        env:
+          APP_CLIENT_ID: ${{ vars.BOT_APP_CLIENT_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+        with:
+          script: await require('./control/.github/scripts/upstream-sync.cjs').checkAppPermissions({context, core});
+
+      - name: Rebase isolated checkout
+        if: steps.detect.outputs.changed == 'true' && env.SYNC_MODE != 'check'
+        id: rebase
+        uses: actions/github-script@v8
+        with:
+          script: require('./control/.github/scripts/upstream-sync.cjs').rebase({core});
+
+      - name: Check AI review protection
+        if: steps.detect.outputs.changed == 'true' && (startsWith(env.SYNC_MODE, 'rehearse') || (env.SYNC_PUBLISH == 'true' && env.SYNC_MODE == 'sync'))
+        uses: actions/github-script@v8
+        with:
+          script: await require('./control/.github/scripts/upstream-sync.cjs').requireReviewEnvironment(github, context);
+
+      - name: Create a read token for optional model variable lookup
+        if: steps.rebase.outputs.conflict == 'true'
+        id: model-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          client-id: ${{ vars.BOT_APP_CLIENT_ID }}
+          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+          permission-contents: read
+          permission-variables: ${{ secrets.AI_API_KEY == '' && 'read' || '' }}
+
+      - name: Configure the conflict agent
+        if: steps.rebase.outputs.conflict == 'true'
+        uses: actions/github-script@v8
+        env:
+          AI_BASE_URL: ${{ vars.AI_BASE_URL }}
+          AI_MODEL_ID: ${{ vars.AI_MODEL_ID }}
+          AI_API_FORMAT: ${{ vars.AI_API_FORMAT || 'chat-completions' }}
+          AI_API_KEY_SECRET: ${{ secrets.AI_API_KEY }}
+        with:
+          github-token: ${{ steps.model-token.outputs.token }}
+          script: await require('./control/.github/scripts/upstream-sync.cjs').modelConfig({github, context, core});
+
+      - name: Pull the pinned OpenCode container
+        if: steps.rebase.outputs.conflict == 'true' || startsWith(env.SYNC_MODE, 'rehearse')
+        timeout-minutes: 3
+        run: |
+          docker pull ghcr.io/anomalyco/opencode:1.18.34
+          docker run --rm --user "$(id -u):$(id -g)" --read-only --tmpfs /tmp:rw,exec,size=1g -e HOME=/tmp ghcr.io/anomalyco/opencode:1.18.34 --version
+
+      - name: Resolve text conflicts in an isolated agent container
+        if: steps.rebase.outputs.conflict == 'true'
+        timeout-minutes: 17
+        uses: actions/github-script@v8
+        with:
+          script: require('./control/.github/scripts/upstream-sync.cjs').resolveWithAI({core});
+
+      - name: Compile translation catalogs from resolved sources
+        if: steps.detect.outputs.changed == 'true' && env.SYNC_MODE != 'check'
+        # Parse data with pinned polib; never import modules from the candidate.
+        run: |
+          python -m venv "$RUNNER_TEMP/po-tools"
+          "$RUNNER_TEMP/po-tools/bin/python" -I -m pip install polib==1.2.0 opencc==1.3.1
+          "$RUNNER_TEMP/po-tools/bin/python" -I -c 'import os, pathlib, polib; [polib.pofile(str(p)).save_as_mofile(str(p.with_suffix(".mo"))) for p in pathlib.Path(os.environ["SYNC_SOURCE"]).glob("assets/locales/*/LC_MESSAGES/march7th.po")]'
+
+      - name: Record the exact candidate and review material
+        if: steps.detect.outputs.changed == 'true' && env.SYNC_MODE != 'check'
+        id: finish
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await require('./control/.github/scripts/upstream-sync.cjs').finalize({
+              core, docPython: `${process.env.RUNNER_TEMP}/po-tools/bin/python`,
+            });
+
+      - name: Create candidate push token
+        if: steps.finish.outputs.candidate != ''
+        id: push-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          client-id: ${{ vars.BOT_APP_CLIENT_ID }}
+          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-workflows: write
+
+      - name: Push the unique candidate branch
+        if: steps.finish.outputs.candidate != ''
+        uses: actions/github-script@v8
+        env:
+          SYNC_PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
+        with:
+          script: await require('./control/.github/scripts/upstream-sync.cjs').pushCandidate({core});
+
+      - name: Upload review material
+        if: always() && steps.detect.outputs.changed == 'true' && env.SYNC_MODE != 'check'
+        uses: actions/upload-artifact@v7
+        with:
+          name: upstream-review-${{ github.run_attempt }}
+          path: |
+            ${{ github.workspace }}/sync-state/candidate.json
+            ${{ github.workspace }}/sync-state/changes.diff
+            ${{ github.workspace }}/sync-state/range-diff.txt
+          retention-days: 30
+          if-no-files-found: error
+
+  tests:
+    needs: prepare
+    if: needs.prepare.outputs.candidate != ''
+    uses: ./.github/workflows/8.test.yml
+    with:
+      source_sha: ${{ needs.prepare.outputs.candidate }}
+
+  package:
+    needs: prepare
+    if: needs.prepare.outputs.candidate != ''
+    uses: ./.github/workflows/13.package.yml
+    with:
+      source_sha: ${{ needs.prepare.outputs.candidate }}
+      release_tag: ${{ needs.prepare.outputs.tag }}
+      artifact_name: upstream-package-${{ github.run_attempt }}
+
+  approve:
+    needs: [prepare, tests, package]
+    if: needs.prepare.outputs.publish == 'true' && needs.prepare.outputs.ai == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: upstream-ai-review
+      url: https://github.com/${{ github.repository }}/commit/${{ needs.prepare.outputs.candidate }}
+    steps:
+      - name: Record the reviewed commit
+        env:
+          CANDIDATE_SHA: ${{ needs.prepare.outputs.candidate }}
+        run: echo "Human approved candidate $CANDIDATE_SHA" >> "$GITHUB_STEP_SUMMARY"
+
+  publish:
+    needs: [prepare, tests, package, approve]
+    if: >-
+      always() && !cancelled() &&
+      needs.prepare.result == 'success' && needs.tests.result == 'success' && needs.package.result == 'success' &&
+      needs.prepare.outputs.publish == 'true' &&
+      ((needs.prepare.outputs.ai == 'false' && needs.approve.result == 'skipped') ||
+       (needs.prepare.outputs.ai == 'true' && needs.approve.result == 'success'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      actions: read
+      deployments: read
+    env:
+      SYNC_SOURCE: ${{ github.workspace }}/control
+      CANDIDATE_SHA: ${{ needs.prepare.outputs.candidate }}
+      OLD_SHA: ${{ needs.prepare.outputs.old }}
+      RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+      AI_USED: ${{ needs.prepare.outputs.ai }}
+      PUBLISH_ALLOWED: ${{ needs.prepare.outputs.publish }}
+      SYNC_MODE: ${{ inputs.mode || 'sync' }}
+      PACKAGE_DIR: ${{ github.workspace }}/release-package
+    steps:
+      - name: Checkout trusted controller only
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+
+      - name: Download this run's validated package
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ needs.package.outputs.artifact_name }}
+          path: ${{ github.workspace }}/release-package
+
+      - name: Verify candidate and package checksums before changing main
+        uses: actions/github-script@v8
+        with:
+          script: |
+            require('./control/.github/scripts/upstream-sync.cjs').verifyArtifacts(
+              process.env.PACKAGE_DIR, process.env.CANDIDATE_SHA, process.env.RELEASE_TAG);
+
+      - name: Create a short-lived promotion token
+        id: promote-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          client-id: ${{ vars.BOT_APP_CLIENT_ID }}
+          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-workflows: write
+
+      - name: Back up main, promote with lease, and create immutable tag
+        uses: actions/github-script@v8
+        env:
+          SYNC_PUSH_TOKEN: ${{ steps.promote-token.outputs.token }}
+        with:
+          script: await require('./control/.github/scripts/upstream-sync.cjs').promote({github, context, core});
+
+      - name: Publish the already validated package
+        uses: actions/github-script@v8
+        with:
+          script: await require('./control/.github/scripts/upstream-sync.cjs').publish({github, context, core});
