@@ -2,6 +2,10 @@
 
 > 本文件由簡體中文版經 OpenCC 簡繁轉換產生，用語以台灣習慣為準；內容如有差異，請以簡體中文版為準。
 
+## v2026.10.3.post1
+- 同步官方 [v2026.10.3](https://github.com/moesnow/March7thAssistant/releases/tag/v2026.10.3)，保留桌面分身功能。
+- 包含 AI 輔助解決的衝突，釋出前需維護者稽核。
+
 ## v2026.10.3
 - 新增 QQ 官方機器人通知渠道
 - 修復更新時偶發的配置檔案損壞或被重置為預設值的問題
@@ -476,7 +480,7 @@
 - 支援 “觸屏模式（雲遊戲移動端 UI）” 啟動遊戲（工具箱）
 - “領取沉浸獎勵” 選項更改為 “領取沉浸獎勵/執行飾品提取”（領取積分獎勵後將自動執行飾品提取）
 - 修復更換新桌布 “願今夜無夢” 後無法進入郵箱
-- 修復無法識別並跳過末日幻影快速挑戰提示框 [#406](https://github.com/moesnow/March7thAssistant/issues/406) 
+- 修復無法識別並跳過末日幻影快速挑戰提示框 [#406](https://github.com/moesnow/March7thAssistant/issues/406)
 
 ## v2.7.0
 
@@ -1154,3 +1158,13 @@
 ### Features
 - feat: graphical user interface
 增加圖形使用者介面
+
+## v2026.10.1
+- FLuoXue fork 桌面分身版，基於上游 v2026.9.30
+- 新增“工具箱 → 桌面分身”，支援獨立 Windows 會話、管理員啟動、隱藏、重連和登出
+- 新增星鐵遊戲相對滑鼠轉發，支援 Alt 釋放、失焦釋放、斷線恢復與過期輸入丟棄
+- 分身使用獨立配置和暫停控制檔案，關閉遊戲時限定當前會話
+- 修正視窗畫面比例：按實際畫面區域保持 16:9，適配 DPI、小窗和拖動縮放
+- 分身視窗標題沿用主視窗標題及版本號，並追加“（桌面分身）”
+- 發行包內建自包含分身宿主，無需額外安裝 .NET；GitHub 更新源指向本 fork
+- 使用說明：[桌面分身](https://github.com/FLuoXue/March7thAssistant/blob/main/assets/docs/DesktopSession.md)
