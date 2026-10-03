@@ -1182,3 +1182,7 @@
 - 分身窗口标题沿用主窗口标题及版本号，并追加“（桌面分身）”
 - 发行包内置自包含分身宿主，无需额外安装 .NET；GitHub 更新源指向本 fork
 - 使用说明：[桌面分身](https://github.com/FLuoXue/March7thAssistant/blob/main/assets/docs/DesktopSession.md)
+
+## v2026.10.3.post1
+- 同步官方 [v2026.10.3](https://github.com/moesnow/March7thAssistant/releases/tag/v2026.10.3)，保留桌面分身功能。
+- 包含 AI 辅助解决的冲突，发布前需维护者审核。
