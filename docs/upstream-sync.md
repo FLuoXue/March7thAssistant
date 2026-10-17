@@ -2,7 +2,7 @@
 
 目标：定时检测 `moesnow/March7thAssistant` 的正式 Release，将桌面分身等 fork 提交
 rebase 到新版上游；测试和打包通过后自动发布。只要调用过 AI 解冲突，就必须先人工审核。
-全部运行在 GitHub Actions，无需服务器，也不新增 Python 脚本。MirrorChyan 的现有行为保持不变。
+全部运行在 GitHub Actions，无需服务器；gettext 目录由一个使用固定版本 polib 的小型 Python 合并器处理。MirrorChyan 的现有行为保持不变。
 
 ## 工作流程
 
@@ -11,17 +11,20 @@ flowchart TD
   A[北京时间每天 00:00 检测正式 Release] --> B{上游提交已包含在 main?}
   B -->|是| C[结束，无变更]
   B -->|否| D[固定旧 main 和上游 SHA，隔离 rebase]
-  D --> E{存在代码冲突?}
-  E -->|否| G[生成候选 SHA 与审核差异]
-  E -->|是| F[隔离容器内由 AI 解文本冲突]
+  D --> E{存在翻译目录冲突?}
+  E -->|是| F[用 polib 按条目三方合并]
+  E -->|否| G{存在其他代码冲突?}
   F --> G
-  G --> H[四平台测试、Windows 宿主检查、完整打包]
-  H --> I{本次调用过 AI?}
-  I -->|是| J[Environment 人工审核指定 SHA]
-  I -->|否| K[检查旧 main 未变化]
-  J --> K
-  K --> L[备份旧 main，force-with-lease 晋升]
-  L --> M[创建不可变标签，发布已验证的产物]
+  G -->|是| I[隔离容器内由 AI 解文本冲突]
+  G -->|否| H[源码提取并编译翻译目录]
+  I --> H
+  H --> J[四平台测试、Windows 宿主检查、完整打包]
+  J --> K{本次调用过 AI?}
+  K -->|是| L[Environment 人工审核指定 SHA]
+  K -->|否| M[检查旧 main 未变化]
+  L --> M
+  M --> N[备份旧 main，force-with-lease 晋升]
+  N --> O[创建不可变标签，发布已验证的产物]
 ```
 
 任何失败都会阻止后续晋升。AI 失败不会进入自动发布；等待审核时 main 的新提交也不会被覆盖。
@@ -116,14 +119,16 @@ fork 使用递增的 `.postN` 版本，例如官方 `v2026.10.2` → fork `v2026
 每次生成与标签一致的 `assets/config/version.txt` 和更新日志标题。
 
 部分冲突不需要 AI：版本号最终统一生成；更新日志按三方比较合并独立段落，双方同时修改
-同一段时才停下来；rebase 后先扫描源码并补齐 `.pot`/`.po` 新条目，再从最终 `.po` 编译 `.mo`，
-繁体文档由最终简体内容重新生成。这样上游新增文案不会因翻译模板过期而令候选在多平台校验中失败。
+同一段时才停下来；`.pot`/`.po` 冲突使用固定版本 `polib` 按 gettext 条目键三方合并，保留两边独立新增的条目，
+同一条目双方都改了译文时保留 fork 译文。随后扫描源码并补齐新条目，再从最终 `.po` 编译 `.mo`，
+繁体文档由最终简体内容重新生成。这样翻译目录冲突不占用 AI 步数，上游新增文案也不会令候选校验失败。
 这些确定性操作仍走无 AI 路径。
 
-AI 使用固定版本 OpenCode 容器，每次最多 5 分钟、最多 40 个 agent 步骤，每个 rebase 最多 3 次调用。
+AI 使用固定版本 OpenCode 容器，每次最多 5 分钟、最多 40 个 agent 步骤，每个 rebase 最多 3 次调用；
+只有结构化合并后仍有代码冲突时才配置模型并启动容器，纯翻译目录冲突不依赖模型 Key。
 Agent 只能访问文件副本和模型 Key，不持有 GitHub 写令牌或 `.git`。
-控制器只取回本轮列出的冲突文件；工作流、同步配置和 MirrorChyan 冲突需要人工处理。
-第一版只接受普通文本的 modify/modify 冲突；二进制、删除/修改、重命名等复杂情况停止并保留诊断。
+控制器只取回本轮列出的代码冲突文件；工作流、同步配置和 MirrorChyan 冲突需要人工处理。
+AI 只处理普通文本的 modify/modify 代码冲突；二进制、删除/修改、重命名等复杂情况停止并保留诊断。
 模型 Key 只传入解冲突容器，容器步骤结束后会清空后续步骤环境中的 Key。
 AI 不负责提交、推送、标签或发布；其任何参与都会使人工审核标记保持为 true。
 
@@ -157,6 +162,7 @@ git push --force-with-lease=refs/heads/main:<旧 SHA> origin <候选 SHA>:refs/h
 
 - `12.upstream_sync.yml`：触发、权限、AI 隔离、测试/构建依赖、审批和发布。
 - `.github/scripts/upstream-sync.cjs`：版本检测、Git 操作、冲突处理、产物校验及发布。
+- `.github/scripts/merge_gettext.py`：使用固定版 polib 三方合并 `.po`/`.pot` 冲突。
 - `.github/scripts/upstream-sync.test.cjs`：临时 Git 仓库上的真实 rebase、竞态和重试测试。
 - `13.package.yml`：可复用的无写权限打包任务。
 
