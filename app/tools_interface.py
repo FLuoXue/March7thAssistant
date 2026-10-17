@@ -289,7 +289,11 @@ class ToolsInterface(ScrollArea):
         self.unlockfpsCard.clicked.connect(self.__onUnlockfpsCardClicked)
         self.cloudTouchCard.clicked.connect(self.__onCloudTouchCardClicked)
         self.screenTestCard.clicked.connect(self.__onScreenTestCardClicked)
-        self.desktopSessionCard.clicked.connect(self.window().openDesktopSession)
+        open_desktop_session = getattr(self.window(), "openDesktopSession", None)
+        if callable(open_desktop_session):
+            self.desktopSessionCard.clicked.connect(open_desktop_session)
+        else:
+            self.desktopSessionCard.setEnabled(False)
 
     def __onScreenTestCardClicked(self):
         start_task("screen_test")
