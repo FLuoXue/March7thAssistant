@@ -1,7 +1,7 @@
 'use strict';
 
 // Trusted controller: loaded from the workflow's original SHA, never the rebased tree.
-// No project code is executed here. Agent and validation run without Git write tokens.
+// Only this controller and its pinned catalog merger execute before candidate validation.
 const fs = require('node:fs');
 const path = require('node:path');
 const {spawnSync} = require('node:child_process');
@@ -120,6 +120,35 @@ function safePath(root, file) {
 function generatedCatalog(file) {
   return file === 'assets/locales/march7th.pot' ||
     /^assets\/locales\/[^/]+\/LC_MESSAGES\/march7th\.(?:po|mo)$/.test(file);
+}
+function gettextConflict(file) {
+  return file === 'assets/locales/march7th.pot' ||
+    /^assets\/locales\/[^/]+\/LC_MESSAGES\/march7th\.po$/.test(file);
+}
+function mergeGettextConflicts(source, contextDir, files, core) {
+  const catalogs = files.filter(gettextConflict);
+  if (!catalogs.length) return files;
+  const python = process.env.I18N_PYTHON;
+  if (!python || !fs.existsSync(python)) throw new Error('Pinned gettext tools are unavailable; refusing to ask AI to merge catalogs.');
+  for (const file of catalogs) {
+    const stages = {};
+    for (const [stage, label] of [[1, 'base'], [2, 'upstream'], [3, 'fork']]) {
+      const contents = readStage(source, stage, file);
+      if (contents === null || contents.includes('\0')) throw new Error(`Invalid gettext merge stage: ${file}`);
+      const stageFile = `merge/${label}/${file}`;
+      writeFile(contextDir, stageFile, contents);
+      stages[label] = safePath(contextDir, stageFile);
+    }
+    const outputFile = `merge/result/${file}`;
+    const output = safePath(contextDir, outputFile);
+    run(python, ['-I', path.join(__dirname, 'merge_gettext.py'), stages.base, stages.upstream, stages.fork, output]);
+    const merged = fs.readFileSync(output, 'utf8');
+    if (/^(<{7}|={7}|>{7}|\|{7})(?: |$)/m.test(merged)) throw new Error(`Gettext merger left conflict markers: ${file}`);
+    writeFile(source, file, merged);
+    git(source, 'add', '--', file);
+    core.info(`Merged gettext catalog structurally: ${file}`);
+  }
+  return files.filter(file => !gettextConflict(file));
 }
 function protectedFile(file) {
   return file.startsWith('.github/') || /mirrorchyan/i.test(file) ||
@@ -240,7 +269,9 @@ function rebase({core}) {
   const result = gitResult(source, ['rebase', '--rebase-merges', '--empty=drop', '--onto', state.upstream, state.previous]);
   settleRebase(source, state, result);
   saveState(state);
-  core.setOutput('conflict', String(conflicts(source).length > 0));
+  const pending = conflicts(source);
+  core.setOutput('conflict', String(pending.length > 0));
+  core.setOutput('ai_required', String(pending.some(file => !gettextConflict(file))));
 }
 function settleRebase(source, state, firstResult) {
   let result = firstResult;
@@ -287,8 +318,7 @@ async function modelConfig({github, context, core}) {
 function resolveWithAI({core}) {
   const {source, stateDir} = workPaths(), state = loadState();
   while (conflicts(source).length) {
-    if (++state.aiRounds > 3) throw new Error('AI conflict resolution reached its three-round limit. Resolve remaining conflicts manually.');
-    const files = conflicts(source);
+    let files = conflicts(source);
     for (const file of files) {
       if (protectedFile(file)) throw new Error(`Protected conflict requires manual resolution: ${file}`);
       for (const stage of [1, 2, 3]) {
@@ -298,10 +328,18 @@ function resolveWithAI({core}) {
       const modes = git(source, 'ls-files', '-u', '--', file).trim().split('\n');
       if (modes.some(line => !/^100(644|755) /.test(line))) throw new Error(`Unsupported conflict file mode: ${file}`);
     }
+    const contextDir = path.join(stateDir, `context-${state.aiRounds + 1}`);
+    fs.mkdirSync(contextDir, {recursive: true});
+    files = mergeGettextConflicts(source, contextDir, files, core);
+    if (!files.length) {
+      settleRebase(source, state, gitResult(source, ['-c', 'core.editor=true', 'rebase', '--continue']));
+      saveState(state);
+      continue;
+    }
+    if (++state.aiRounds > 3) throw new Error('AI conflict resolution reached its three-round limit. Resolve remaining conflicts manually.');
     state.ai = true;
     saveState(state); // Sticky: any model invocation means human approval, even if its edits are minimal.
     const sandbox = path.join(stateDir, `agent-${state.aiRounds}`);
-    const contextDir = path.join(stateDir, `context-${state.aiRounds}`);
     fs.mkdirSync(sandbox, {recursive: true}); fs.mkdirSync(contextDir, {recursive: true});
     fs.mkdirSync(path.join(sandbox, '.m7a-context'), {recursive: true});
     // Copy tracked regular files only. No .git, App key, runner credentials, or local config.
@@ -470,4 +508,4 @@ async function publish({github, context, core}) {
 
 module.exports = {detect, rebase, modelConfig, resolveWithAI, finalize, pushCandidate, promote, publish, checkAppPermissions,
   requireReviewEnvironment, verifyArtifacts, nextVersion, compareVersions, mergeChangelog,
-  protectedFile, safePath, generatedCatalog, settleRebase, conflicts, sha, ASSETS};
+  protectedFile, safePath, generatedCatalog, gettextConflict, mergeGettextConflicts, settleRebase, conflicts, sha, ASSETS};

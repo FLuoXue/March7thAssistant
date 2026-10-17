@@ -100,6 +100,7 @@ test('real Git rebase preserves upstream, desktop features and both changelogs w
   const f = fixture(t), core = coreMock();
   sync.rebase({core});
   assert.equal(core.outputs.conflict, 'false');
+  assert.equal(core.outputs.ai_required, 'false');
   assert.equal(fs.readFileSync(path.join(f.dir, 'core.txt'), 'utf8'), 'new upstream behavior\n');
   assert.equal(fs.readFileSync(path.join(f.dir, 'desktop.txt'), 'utf8'), 'keep desktop sessions\n');
   sync.finalize({core});
@@ -151,6 +152,7 @@ test('code conflicts stop before promotion and remain available to the AI resolv
   const f = fixture(t, true), core = coreMock();
   sync.rebase({core});
   assert.equal(core.outputs.conflict, 'true');
+  assert.equal(core.outputs.ai_required, 'true');
   assert.deepEqual(sync.conflicts(f.dir), ['core.txt']);
   assert.throws(() => sync.finalize({core}), /incomplete/);
   assert.equal(git(f.dir, 'rev-parse', 'main'), f.old);
@@ -177,6 +179,9 @@ test('only gettext catalog outputs may be added by catalog extraction before fin
     'app.py',
     '.github/workflows/12.upstream_sync.yml',
   ]) assert.equal(sync.generatedCatalog(file), false, file);
+  assert.equal(sync.gettextConflict('assets/locales/zh_CN/LC_MESSAGES/march7th.po'), true);
+  assert.equal(sync.gettextConflict('assets/locales/zh_CN/LC_MESSAGES/march7th.mo'), false);
+  assert.equal(sync.gettextConflict('assets/locales/other.pot'), false);
 });
 
 test('finalization commits deterministic gettext extraction alongside compiled catalogs', t => {
