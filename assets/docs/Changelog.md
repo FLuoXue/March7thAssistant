@@ -1,5 +1,9 @@
 # 更新日志
 
+## v2026.10.16.post1
+- 同步官方 [v2026.10.16](https://github.com/moesnow/March7thAssistant/releases/tag/v2026.10.16)，保留桌面分身功能。
+- 包含 AI 辅助解决的冲突，发布前需维护者审核。
+
 ## v2026.10.16
 - 新手推荐观看 [从零开始的三月七小助手保姆级安装教程](https://www.bilibili.com/video/BV1DrJt62E1u/)，从下载、解压到首次启动，跟着视频一步步完成安装，欢迎点赞、投币、收藏支持！
 - 自动对话新增自动阅读翁法罗斯英雄纪，支持跳过已读及未解锁篇章（请先打开该书目录） [#1250](https://github.com/moesnow/March7thAssistant/pulls/1250) @long098sdo
