@@ -52,6 +52,9 @@ function fixture(t, conflict = false) {
   write(dir, 'core.txt', 'original behavior\n');
   write(dir, 'assets/config/version.txt', 'v2026.9.30\n');
   write(dir, 'assets/docs/Changelog.md', '# 更新日志\n\n## v2026.9.30\n- original\n');
+  write(dir, 'assets/locales/march7th.pot', 'base template\n');
+  write(dir, 'assets/locales/zh_CN/LC_MESSAGES/march7th.po', 'base source catalog\n');
+  write(dir, 'assets/locales/zh_CN/LC_MESSAGES/march7th.mo', 'base compiled catalog\n');
   const base = commit(dir, 'upstream base');
   git(dir, 'checkout', '-b', 'upstream');
   write(dir, 'core.txt', 'new upstream behavior\n');
@@ -160,6 +163,33 @@ test('protected files and path traversal are excluded from AI output', t => {
   }
   for (const file of ['../outside', '/absolute', 'a/../../outside', 'a\\b']) assert.throws(() => sync.safePath(dir, file));
   assert.equal(sync.safePath(dir, 'app/file.py'), path.join(dir, 'app/file.py'));
+});
+
+test('only gettext catalog outputs may be added by catalog extraction before finalization', t => {
+  for (const file of [
+    'assets/locales/march7th.pot',
+    'assets/locales/zh_CN/LC_MESSAGES/march7th.po',
+    'assets/locales/en_US/LC_MESSAGES/march7th.mo',
+  ]) assert.equal(sync.generatedCatalog(file), true, file);
+  for (const file of [
+    'assets/locales/zh_CN/LC_MESSAGES/other.po',
+    'assets/locales/zh_CN/other.po',
+    'app.py',
+    '.github/workflows/12.upstream_sync.yml',
+  ]) assert.equal(sync.generatedCatalog(file), false, file);
+});
+
+test('finalization commits deterministic gettext extraction alongside compiled catalogs', t => {
+  const f = fixture(t), core = coreMock();
+  sync.rebase({core});
+  write(f.dir, 'assets/locales/march7th.pot', 'extracted template\n');
+  write(f.dir, 'assets/locales/zh_CN/LC_MESSAGES/march7th.po', 'extracted source catalog\n');
+  write(f.dir, 'assets/locales/zh_CN/LC_MESSAGES/march7th.mo', 'compiled catalog\n');
+  sync.finalize({core});
+  const changed = git(f.dir, 'diff-tree', '--no-commit-id', '--name-only', '-r', core.outputs.candidate);
+  assert.match(changed, /assets\/locales\/march7th\.pot/);
+  assert.match(changed, /assets\/locales\/zh_CN\/LC_MESSAGES\/march7th\.po/);
+  assert.match(changed, /assets\/locales\/zh_CN\/LC_MESSAGES\/march7th\.mo/);
 });
 
 test('AI approval fails closed when Environment is absent or has no required reviewers', async () => {
