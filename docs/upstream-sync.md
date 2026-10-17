@@ -36,7 +36,7 @@ flowchart TD
 
 - 保留现有 Contents、Issues、Pull requests 的 Read and write。
 - 将 **Workflows 设为 Read and write**（有的页面只显示 Read/write）。
-- 若 Key 放在 Variables，仍需要 Variables: Read-only。
+- 若 Key 放在 Variables，App 还需要 Actions: Read-only（GitHub 仓库变量 API 使用 Actions 权限）。
 - 保存后，到 <https://github.com/settings/installations> 接受安装权限更新。
 
 原因：rebase 会重写包含 `.github/workflows` 的提交，推送候选和晋升 main 都需要
@@ -116,13 +116,15 @@ fork 使用递增的 `.postN` 版本，例如官方 `v2026.10.2` → fork `v2026
 每次生成与标签一致的 `assets/config/version.txt` 和更新日志标题。
 
 部分冲突不需要 AI：版本号最终统一生成；更新日志按三方比较合并独立段落，双方同时修改
-同一段时才停下来；`.mo` 文件从最终 `.po` 重新编译，繁体文档由最终简体内容重新生成。
+同一段时才停下来；rebase 后先扫描源码并补齐 `.pot`/`.po` 新条目，再从最终 `.po` 编译 `.mo`，
+繁体文档由最终简体内容重新生成。这样上游新增文案不会因翻译模板过期而令候选在多平台校验中失败。
 这些确定性操作仍走无 AI 路径。
 
 AI 使用固定版本 OpenCode 容器，每次最多 5 分钟、每个 rebase 最多 3 次调用。
 Agent 只能访问文件副本和模型 Key，不持有 GitHub 写令牌或 `.git`。
 控制器只取回本轮列出的冲突文件；工作流、同步配置和 MirrorChyan 冲突需要人工处理。
 第一版只接受普通文本的 modify/modify 冲突；二进制、删除/修改、重命名等复杂情况停止并保留诊断。
+模型 Key 只传入解冲突容器，容器步骤结束后会清空后续步骤环境中的 Key。
 AI 不负责提交、推送、标签或发布；其任何参与都会使人工审核标记保持为 true。
 
 ## 发布、重试与恢复
