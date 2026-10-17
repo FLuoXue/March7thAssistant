@@ -117,6 +117,10 @@ function safePath(root, file) {
   }
   return resolved;
 }
+function generatedCatalog(file) {
+  return file === 'assets/locales/march7th.pot' ||
+    /^assets\/locales\/[^/]+\/LC_MESSAGES\/march7th\.(?:po|mo)$/.test(file);
+}
 function protectedFile(file) {
   return file.startsWith('.github/') || /mirrorchyan/i.test(file) ||
     /(^|\/)(opencode\.jsonc?|AGENTS\.md|CLAUDE\.md)$/.test(file) || file.startsWith('.opencode/');
@@ -363,7 +367,7 @@ function finalize({core, docPython}) {
   if (!ancestor(source, state.upstream, 'HEAD')) throw new Error('Candidate is not based on the selected upstream SHA.');
   // Generated catalogs may change; no other preexisting working-tree changes are accepted.
   const dirty = git(source, 'diff', '--name-only').trim().split('\n').filter(Boolean);
-  if (dirty.some(p => !/^assets\/locales\/[^/]+\/LC_MESSAGES\/march7th\.mo$/.test(p))) throw new Error('Unexpected changes after catalog generation.');
+  if (dirty.some(p => !generatedCatalog(p))) throw new Error('Unexpected changes after catalog generation.');
   const existing = fs.readFileSync(path.join(source, CHANGELOG), 'utf8');
   const entry = `## ${state.tag}\n- 同步官方 [${state.upstreamTag}](https://github.com/${UPSTREAM}/releases/tag/${state.upstreamTag})，保留桌面分身功能。\n` +
     `- ${state.ai ? '包含 AI 辅助解决的冲突，发布前需维护者审核。' : '通过 rebase 同步，未使用 AI 修改。'}\n\n`;
@@ -466,4 +470,4 @@ async function publish({github, context, core}) {
 
 module.exports = {detect, rebase, modelConfig, resolveWithAI, finalize, pushCandidate, promote, publish, checkAppPermissions,
   requireReviewEnvironment, verifyArtifacts, nextVersion, compareVersions, mergeChangelog,
-  protectedFile, safePath, settleRebase, conflicts, sha, ASSETS};
+  protectedFile, safePath, generatedCatalog, settleRebase, conflicts, sha, ASSETS};
