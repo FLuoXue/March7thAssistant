@@ -26,6 +26,14 @@ def test_tools_entry_opens_manager(qtbot, monkeypatch):
     assert parent.count == 1
 
 
+def test_tools_entry_without_window_is_disabled(qapp, monkeypatch):
+    from app.tools_interface import ToolsInterface
+    monkeypatch.delenv('MARCH7TH_DESKTOP_SESSION', raising=False)
+
+    tools = ToolsInterface()
+    assert not tools.desktopSessionCard.isEnabled()
+
+
 def test_child_pause_path_is_independent(qapp, monkeypatch):
     from app.log_interface import LogInterface
     from utils import windows_session
