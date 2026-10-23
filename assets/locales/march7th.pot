@@ -946,178 +946,186 @@ msgstr ""
 msgid "任务正在运行"
 msgstr ""
 
-#: app/log_interface.py:1750
+#: app/log_interface.py:1753
 msgid "继续任务"
 msgstr ""
 
-#: app/log_interface.py:1804
+#: app/log_interface.py:1807
 msgid "复制"
 msgstr ""
 
-#: app/log_interface.py:1807
+#: app/log_interface.py:1810
 msgid "全选"
 msgstr ""
 
-#: app/log_interface.py:1809
+#: app/log_interface.py:1812
 msgid "清空日志"
 msgstr ""
 
-#: app/log_interface.py:2283
+#: app/log_interface.py:2286
 msgid "关机"
 msgstr ""
 
-#: app/log_interface.py:2284
+#: app/log_interface.py:2287
 msgid "睡眠"
 msgstr ""
 
-#: app/log_interface.py:2285
+#: app/log_interface.py:2288
 msgid "休眠"
 msgstr ""
 
-#: app/log_interface.py:2286
+#: app/log_interface.py:2289
 msgid "重启"
 msgstr ""
 
-#: app/log_interface.py:2287
+#: app/log_interface.py:2290
 msgid "注销"
 msgstr ""
 
-#: app/log_interface.py:2288
+#: app/log_interface.py:2291
 msgid "关闭显示器"
 msgstr ""
 
-#: app/log_interface.py:2357
+#: app/log_interface.py:2360
 msgid "任务完成"
 msgstr ""
 
-#: app/log_interface.py:2360
+#: app/log_interface.py:2363
 msgid "任务已停止"
 msgstr ""
 
-#: app/main_window.py:297
-msgid "主页"
+#: app/main_window.py:225
+msgid "（桌面分身）"
 msgstr ""
 
 #: app/main_window.py:300
+msgid "主页"
+msgstr ""
+
+#: app/main_window.py:303
 msgid "抽卡记录"
 msgstr ""
 
-#: app/main_window.py:301
+#: app/main_window.py:304
 msgid "工具箱"
 msgstr ""
 
-#: app/main_window.py:306
+#: app/main_window.py:309
 msgid "启动游戏"
 msgstr ""
 
-#: app/main_window.py:310
+#: app/main_window.py:313
 msgid "日志"
 msgstr ""
 
-#: app/main_window.py:326
+#: app/main_window.py:329
 msgid "赞赏"
 msgstr ""
 
-#: app/main_window.py:328
+#: app/main_window.py:331
 msgid "支持作者🥰"
 msgstr ""
 
-#: app/main_window.py:329
+#: app/main_window.py:332
 msgid ""
 "此程序为免费开源项目，如果你付了钱请立刻退款\n"
 "如果喜欢本项目，可以微信赞赏送作者一杯咖啡☕\n"
 "您的支持就是作者开发和维护项目的动力🚀"
 msgstr ""
 
-#: app/main_window.py:336
+#: app/main_window.py:339
 msgid "设置"
 msgstr ""
 
-#: app/main_window.py:355
+#: app/main_window.py:358
 msgid "显示主界面"
 msgstr ""
 
-#: app/main_window.py:360
+#: app/main_window.py:363
 msgid "完整运行"
 msgstr ""
 
-#: app/main_window.py:457
+#: app/main_window.py:463
+msgid "桌面分身"
+msgstr ""
+
+#: app/main_window.py:489
 msgid "请先停止当前任务后再启动新任务"
 msgstr ""
 
-#: app/main_window.py:519
+#: app/main_window.py:551
 msgid "语言切换失败"
 msgstr ""
 
-#: app/main_window.py:627
+#: app/main_window.py:659
 msgid "更新成功"
 msgstr ""
 
-#: app/main_window.py:639
+#: app/main_window.py:671
 msgid "配置加载失败"
 msgstr ""
 
-#: app/main_window.py:733
+#: app/main_window.py:765
 msgid "配置已更新"
 msgstr ""
 
-#: app/main_window.py:734
+#: app/main_window.py:766
 msgid "检测到配置文件变化，已自动重新加载"
 msgstr ""
 
-#: app/main_window.py:824
+#: app/main_window.py:860
 msgid "程序已最小化到托盘"
 msgstr ""
 
-#: app/main_window.py:871
+#: app/main_window.py:907
 msgid "游戏已在运行"
 msgstr ""
 
-#: app/main_window.py:872
+#: app/main_window.py:908
 msgid "无需重复启动游戏"
 msgstr ""
 
-#: app/main_window.py:884
+#: app/main_window.py:920
 msgid "正在下载内置浏览器(ง •̀_•́)ง"
 msgstr ""
 
-#: app/main_window.py:885
+#: app/main_window.py:921
 msgid "下载成功后，将自动启动云·星穹铁道"
 msgstr ""
 
-#: app/main_window.py:894
+#: app/main_window.py:930
 msgid "正在启动游戏(❁´◡`❁)"
 msgstr ""
 
-#: app/main_window.py:915
+#: app/main_window.py:951
 msgid "启动成功(＾∀＾●)"
 msgstr ""
 
-#: app/main_window.py:925
+#: app/main_window.py:961
 msgid "浏览器或驱动下载失败 (╥╯﹏╰╥)"
 msgstr ""
 
-#: app/main_window.py:926
+#: app/main_window.py:962
 msgid "请检查网络连接是否正常"
 msgstr ""
 
-#: app/main_window.py:935
+#: app/main_window.py:971
 msgid "云游戏启动失败(╥╯﹏╰╥)"
 msgstr ""
 
-#: app/main_window.py:936
+#: app/main_window.py:972
 msgid "请检查所选浏览器是否存在，网络连接是否正常"
 msgstr ""
 
-#: app/main_window.py:945
+#: app/main_window.py:981
 msgid "游戏路径配置错误(╥╯﹏╰╥)"
 msgstr ""
 
-#: app/main_window.py:946
+#: app/main_window.py:982
 msgid "请在“设置”→“程序”中配置"
 msgstr ""
 
-#: app/main_window.py:955
+#: app/main_window.py:991
 msgid "启动失败"
 msgstr ""
 
@@ -3977,81 +3985,89 @@ msgstr ""
 msgid "以最短路径遍历所有可达界面，验证界面切换是否正常"
 msgstr ""
 
-#: app/tools_interface.py:132
+#: app/tools_interface.py:71
+msgid "打开"
+msgstr ""
+
+#: app/tools_interface.py:72
+msgid "在独立桌面运行星铁和三月七助手，支持游戏鼠标、窗口隐藏和管理员启动"
+msgstr ""
+
+#: app/tools_interface.py:137
 msgid "恢复60成功 (＾∀＾●)"
 msgstr ""
 
-#: app/tools_interface.py:143
+#: app/tools_interface.py:148
 msgid "解锁120成功 (＾∀＾●)"
 msgstr ""
 
-#: app/tools_interface.py:153
+#: app/tools_interface.py:158
 msgid "请将游戏图像质量修改为自定义后重试"
 msgstr ""
 
-#: app/tools_interface.py:160
+#: app/tools_interface.py:165
 msgid "{error}（详情见日志）"
 msgstr ""
 
-#: app/tools_interface.py:162
+#: app/tools_interface.py:167
 msgid "解锁失败"
 msgstr ""
 
-#: app/tools_interface.py:180
+#: app/tools_interface.py:185
 msgid "此功能依赖第三方程序实现"
 msgstr ""
 
-#: app/tools_interface.py:181
+#: app/tools_interface.py:186
 msgid ""
 "https://github.com/winTEuser/Genshin_StarRail_fps_unlocker\n"
 "使用本功能产生的所有问题与本项目与开发者团队无关，是否继续？"
 msgstr ""
 
-#: app/tools_interface.py:182
+#: app/tools_interface.py:187
 msgid "再次确认：可能存在风险"
 msgstr ""
 
-#: app/tools_interface.py:183
+#: app/tools_interface.py:188
 msgid "工作原理是通过 WriteProcessMemory 把代码写进游戏，是否继续？"
 msgstr ""
 
-#: app/tools_interface.py:184
+#: app/tools_interface.py:189
 msgid "最终确认：请谨慎操作"
 msgstr ""
 
-#: app/tools_interface.py:185
+#: app/tools_interface.py:190
 msgid "确认继续并允许启用触屏模式？"
 msgstr ""
 
-#: app/tools_interface.py:201
+#: app/tools_interface.py:206
 msgid "请在“设置”→“程序”中配置正确的游戏路径"
 msgstr ""
 
-#: app/tools_interface.py:241
+#: app/tools_interface.py:246
 msgid "已将命令复制到剪贴板"
 msgstr ""
 
-#: app/tools_interface.py:261
+#: app/tools_interface.py:266
 msgid "截图来源"
 msgstr ""
 
-#: app/tools_interface.py:261
+#: app/tools_interface.py:266
 msgid "请选择截图方式"
 msgstr ""
 
-#: app/tools_interface.py:264
+#: app/tools_interface.py:269
 msgid "捕获游戏窗口"
 msgstr ""
 
-#: app/tools_interface.py:267
+#: app/tools_interface.py:272
 msgid "手动选择图片"
 msgstr ""
 
-#: app/tools_interface.py:311
+#: app/tools_interface.py:321
 msgid "自动对话已启动"
 msgstr ""
 
-#: app/tools_interface.py:323
+#: app/tools_interface.py:333
 msgid "自动对话已停止"
 msgstr ""
 

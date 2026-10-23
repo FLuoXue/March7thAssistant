@@ -189,3 +189,23 @@ def test_redirect_without_ref_and_wrong_tag_document_are_rejected(network):
     with pytest.raises(RuntimeError):
         changelog.fetch_changelog('v2026.10.16')
     assert not changelog._CACHE
+
+
+def test_redirect_to_upstream_cannot_replace_fork_history(network):
+    redirected = response()
+    redirected.status_code = 302
+    redirected.headers = {
+        'Location': 'https://api.github.com/repos/moesnow/March7thAssistant/'
+                    'contents/assets/docs/Changelog.md?ref=v2026.10.16',
+    }
+    network.return_value = redirected
+    with pytest.raises(RuntimeError):
+        changelog.fetch_changelog('v2026.10.16')
+    assert not changelog._CACHE
+
+
+def test_history_link_points_to_fork_release():
+    assert changelog.changelog_url('v2026.11.1') == (
+        'https://github.com/FLuoXue/March7thAssistant/'
+        'blob/v2026.11.1/assets/docs/Changelog.md'
+    )

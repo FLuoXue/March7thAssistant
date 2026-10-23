@@ -47,7 +47,7 @@ def clean_release_body(body: str) -> str:
 
 
 def changelog_url(target_version: str) -> str:
-    return ("https://github.com/moesnow/March7thAssistant/blob/"
+    return ("https://github.com/FLuoXue/March7thAssistant/blob/"
             + quote(target_version, safe="") + "/assets/docs/Changelog.md")
 
 
@@ -151,7 +151,7 @@ def fetch_changelog(target_version: str, *, preferred_base: str = "", timeout: f
                         redirected = urljoin(url, response.headers.get("Location", ""))
                         parts = urlsplit(redirected)
                         if (parts.scheme != "https" or parts.netloc != "api.github.com"
-                                or parts.path != "/repos/moesnow/March7thAssistant/contents/assets/docs/Changelog.md"
+                                or parts.path != "/repos/FLuoXue/March7thAssistant/contents/assets/docs/Changelog.md"
                                 or parse_qs(parts.query).get("ref") != [target_version]):
                             raise ValueError("历史更新记录重定向丢失目标版本或地址无效")
                         url, params = redirected, None

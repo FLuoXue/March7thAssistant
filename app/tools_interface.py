@@ -67,6 +67,9 @@ class ToolsInterface(ScrollArea):
             tr("界面可切换性测试"),
             tr("以最短路径遍历所有可达界面，验证界面切换是否正常")
         )
+        self.desktopSessionCard = PushSettingCard(
+            tr('打开'), FIF.APPLICATION, tr('桌面分身'),
+            tr('在独立桌面运行星铁和三月七助手，支持游戏鼠标、窗口隐藏和管理员启动'))
 
         self.__initWidget()
 
@@ -104,6 +107,8 @@ class ToolsInterface(ScrollArea):
         self.ToolsGroup.addSettingCard(self.redemptionCodeCard)
         self.ToolsGroup.addSettingCard(self.cloudTouchCard)
         self.ToolsGroup.addSettingCard(self.screenTestCard)
+        self.ToolsGroup.addSettingCard(self.desktopSessionCard)
+        self.desktopSessionCard.setEnabled(sys.platform == 'win32' and os.environ.get('MARCH7TH_DESKTOP_SESSION') != '1')
 
         if sys.platform != 'win32':
             self.automaticPlotCard.setDisabled(True)
@@ -298,6 +303,11 @@ class ToolsInterface(ScrollArea):
         self.unlockfpsCard.clicked.connect(self.__onUnlockfpsCardClicked)
         self.cloudTouchCard.clicked.connect(self.__onCloudTouchCardClicked)
         self.screenTestCard.clicked.connect(self.__onScreenTestCardClicked)
+        open_desktop_session = getattr(self.window(), "openDesktopSession", None)
+        if callable(open_desktop_session):
+            self.desktopSessionCard.clicked.connect(open_desktop_session)
+        else:
+            self.desktopSessionCard.setEnabled(False)
 
     def __onScreenTestCardClicked(self):
         start_task("screen_test")

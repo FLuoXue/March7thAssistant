@@ -1,5 +1,18 @@
 # 更新日志
 
+## v2026.11.1
+- 同步官方 [v2026.10.31](https://github.com/moesnow/March7thAssistant/releases/tag/v2026.10.31)，保留桌面分身、独立配置、会话隔离和本 fork 更新源。
+- 支持接入 AI 助手（设置 → 关于 → AI 助手）。
+- 新增 Windows 后台运行模式，支持后台键鼠操作
+- 定时任务支持按星期执行，完善运行计划展示
+- 虚构叙事新增「星启模式」与第三队编队支持 [#1282](https://github.com/moesnow/March7thAssistant/pulls/1282) @23swccp
+- 更新弹窗支持跨版本汇总更新记录
+- 支持通过 Epic 启动渠道服星穹铁道 [#1274](https://github.com/moesnow/March7thAssistant/pulls/1274) @23swccp
+- 修复云游戏剩余时长为 0 时容器反复重启的问题 [#1276](https://github.com/moesnow/March7thAssistant/pulls/1276) @StaravenX
+- 优化兑换码使用流程 [#1295](https://github.com/moesnow/March7thAssistant/pulls/1295) @spellbook96
+- 优化性能和稳定性并修复若干已知问题
+- [欢迎关注我们的B站账号，获取最新动态和教程](https://space.bilibili.com/3706960664857075)
+
 ## v2026.10.31
 - 新增 Windows 后台运行模式，支持后台键鼠操作
 - 定时任务支持按星期执行，完善运行计划展示
@@ -10,6 +23,9 @@
 - 优化兑换码使用流程 [#1295](https://github.com/moesnow/March7thAssistant/pulls/1295) @spellbook96
 - 优化性能和稳定性并修复若干已知问题
 - [欢迎关注我们的B站账号，获取最新动态和教程](https://space.bilibili.com/3706960664857075)
+
+## v2026.10.16.post1
+- 同步官方 [v2026.10.16](https://github.com/moesnow/March7thAssistant/releases/tag/v2026.10.16)，保留桌面分身功能。
 
 ## v2026.10.16
 - 新手推荐观看 [从零开始的三月七小助手保姆级安装教程](https://www.bilibili.com/video/BV1DrJt62E1u/)，从下载、解压到首次启动，跟着视频一步步完成安装，欢迎点赞、投币、收藏支持！
@@ -1182,3 +1198,16 @@
 ### Features
 - feat: graphical user interface
 增加图形用户界面
+
+## v2026.10.1
+- FLuoXue fork 桌面分身版，基于上游 v2026.9.30
+- 新增“工具箱 → 桌面分身”，支持独立 Windows 会话、管理员启动、隐藏、重连和注销
+- 新增星铁游戏相对鼠标转发，支持 Alt 释放、失焦释放、断线恢复与过期输入丢弃
+- 分身使用独立配置和暂停控制文件，关闭游戏时限定当前会话
+- 修正窗口画面比例：按实际画面区域保持 16:9，适配 DPI、小窗和拖动缩放
+- 分身窗口标题沿用主窗口标题及版本号，并追加“（桌面分身）”
+- 发行包内置自包含分身宿主，无需额外安装 .NET；GitHub 更新源指向本 fork
+- 使用说明：[桌面分身](https://github.com/FLuoXue/March7thAssistant/blob/main/assets/docs/DesktopSession.md)
+
+## v2026.10.3.post1
+- 同步官方 [v2026.10.3](https://github.com/moesnow/March7thAssistant/releases/tag/v2026.10.3)，保留桌面分身功能。

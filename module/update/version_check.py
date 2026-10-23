@@ -44,8 +44,8 @@ class VersionCheckError(RuntimeError):
 # ── GitHub API 镜像列表 ──────────────────────────────────────────────
 
 GITHUB_API_BASES = (
-    "https://api.github.com/repos/moesnow/March7thAssistant",
-    "https://github.kotori.top/https://api.github.com/repos/moesnow/March7thAssistant",
+    "https://api.github.com/repos/FLuoXue/March7thAssistant",
+    "https://github.kotori.top/https://api.github.com/repos/FLuoXue/March7thAssistant",
 )
 
 _GITHUB_API_URLS = [base + "/releases/latest" for base in GITHUB_API_BASES]
